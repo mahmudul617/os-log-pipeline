@@ -1,0 +1,31 @@
+// Process communication diagram. Regenerate with:
+//   dot -Tpng -Gdpi=160 docs/communication.dot -o docs/communication.png
+digraph pipeline {
+    rankdir=LR;
+    fontname="Helvetica"; node [fontname="Helvetica", fontsize=11]; edge [fontname="Helvetica", fontsize=9];
+    labelloc=t; label="Log-processing pipeline: processes, pipes and records\n ";
+
+    file   [label="app.log\n(input file)", shape=note, style=filled, fillcolor="#f4f4f4"];
+    report [label="Report\n(stdout or -o FILE)", shape=note, style=filled, fillcolor="#f4f4f4"];
+    ckpt   [label="Checkpoint file\n/tmp/lp-<pid>.ckpt\n(last_seq + counters)", shape=cylinder, style=filled, fillcolor="#fff6d6"];
+
+    sup [label="Supervisor (parent)\nlog_pipeline\n\npipe(), fork(), waitpid()\nlogs life cycle\nrestarts on failure", shape=box, style="rounded,filled", fillcolor="#e8eefc", color="#2a6fdb"];
+
+    subgraph cluster_stages {
+        label="child processes (created with fork)"; style=dashed; color="#999999"; fontsize=10;
+        reader [label="Stage 1: reader\nlp-reader\n\nread line, validate,\nassign seq number", shape=box, style="rounded,filled", fillcolor="#e6f4ea", color="#2a9d5c"];
+        filter [label="Stage 2: filter\nlp-filter\n\nkeep selected levels\n/ keyword", shape=box, style="rounded,filled", fillcolor="#e6f4ea", color="#2a9d5c"];
+        summ   [label="Stage 3: summarizer\nlp-summarizer\n\ncount, check seq order,\ncheckpoint, report", shape=box, style="rounded,filled", fillcolor="#e6f4ea", color="#2a9d5c"];
+    }
+
+    file -> reader [label="getline()"];
+    reader -> filter [label="pipe p1\nR|seq|ts|LEVEL|msg\nM|seq|reason\nE|total", color="#e0712b", fontcolor="#b3561c", penwidth=2];
+    filter -> summ [label="pipe p2\nK|seq|ts|LEVEL|msg\nD|seq|LEVEL\nM|seq|reason\nE|total", color="#e0712b", fontcolor="#b3561c", penwidth=2];
+    summ -> report [label="only after E\n(atomic rename)"];
+    summ -> ckpt [label="every N records\n(atomic rename)", style=dashed];
+    ckpt -> sup [label="on restart:\nresume at last_seq+1", style=dashed];
+
+    sup -> reader [label="fork", style=dotted, arrowhead=vee];
+    sup -> filter [label="fork", style=dotted, arrowhead=vee];
+    sup -> summ   [label="fork", style=dotted, arrowhead=vee];
+}

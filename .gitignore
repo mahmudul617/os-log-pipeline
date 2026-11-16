@@ -1,0 +1,9 @@
+bin/
+data/bench/
+data/medium.log
+data/small.log
+*.ckpt
+*.tmp
+*.o
+__pycache__/
+data/test.log

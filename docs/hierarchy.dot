@@ -1,0 +1,19 @@
+// Process hierarchy (what `pstree -p` shows). Regenerate with:
+//   dot -Tpng -Gdpi=160 docs/hierarchy.dot -o docs/hierarchy.png
+digraph hierarchy {
+    rankdir=TB;
+    fontname="Helvetica"; node [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled"];
+    labelloc=t; label="Process hierarchy (as seen with ps / pstree)\n ";
+
+    shell [label="bash (your terminal)\nPID = $$", fillcolor="#f4f4f4"];
+    sup   [label="log_pipeline  (supervisor)\nPPID = bash", fillcolor="#e8eefc", color="#2a6fdb"];
+    r [label="lp-reader\nPPID = supervisor\nwrites p1", fillcolor="#e6f4ea", color="#2a9d5c"];
+    f [label="lp-filter\nPPID = supervisor\nreads p1, writes p2", fillcolor="#e6f4ea", color="#2a9d5c"];
+    s [label="lp-summarizer\nPPID = supervisor\nreads p2", fillcolor="#e6f4ea", color="#2a9d5c"];
+
+    shell -> sup [label=" fork + exec"];
+    sup -> r [label=" fork"];
+    sup -> f [label=" fork"];
+    sup -> s [label=" fork"];
+    { rank=same; r; f; s; }
+}

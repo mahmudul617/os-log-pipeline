@@ -1,0 +1,12 @@
+[03:29:02.631] [supervisor pid=9149   ppid=9145  ] supervisor started: input=data/medium.log, max restarts=3, checkpoint every 10000 records
+[03:29:02.631] [supervisor pid=9149   ppid=9145  ] attempt 0: starting pipeline at seq 1
+[03:29:02.632] [reader     pid=9151   ppid=9149  ] done: 10000 lines in file, sent 10000 records (starting at seq 1)
+[03:29:02.633] [supervisor pid=9149   ppid=9145  ] created reader     -> pid 9151
+[03:29:02.633] [supervisor pid=9149   ppid=9145  ] created filter     -> pid 9152
+[03:29:02.633] [supervisor pid=9149   ppid=9145  ] created summarizer -> pid 9153
+[03:29:02.634] [supervisor pid=9149   ppid=9145  ] reader     (pid 9151) exited normally, status 0
+[03:29:21.192] [filter     pid=9152   ppid=9149  ] done: kept 1501, dropped 8499, malformed passed on 0
+[03:29:21.193] [summarizer pid=9153   ppid=9149  ] done: report written (10000 lines, 0 duplicates ignored)
+[03:29:21.194] [supervisor pid=9149   ppid=9145  ] filter     (pid 9152) exited normally, status 0
+[03:29:21.194] [supervisor pid=9149   ppid=9145  ] summarizer (pid 9153) exited normally, status 0
+[03:29:21.194] [supervisor pid=9149   ppid=9145  ] pipeline finished successfully in 18563 ms (0 restarts)
