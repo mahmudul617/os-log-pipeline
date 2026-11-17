@@ -80,7 +80,7 @@ Lines that do not match are counted as **malformed**, with a reason: `empty_line
 ### Generate test logs
 
 ```bash
-python3 scripts/gen_logs.py 100000 data/test.log --malformed 0.02 --seed 1
+python3 scripts/gen_logs.py 1000000 data/test.log --malformed 0.02 --seed 42
 ```
 
 ## 4. Tests
@@ -145,5 +145,5 @@ tests/      run_tests.sh
 scripts/    gen_logs.py, bench.py, observe.sh
 data/       sample.log (hand-checked)
 docs/       communication / hierarchy diagrams (.dot + .png)
-results/    benchmark output (generated)
+results/    benchmark output, sample_output.txt, sample_lifecycle.log
 ```
