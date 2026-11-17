@@ -1,0 +1,22 @@
+================ LOG SUMMARY ================
+Input lines         : 20
+Valid records       : 16
+Malformed records   : 4
+  empty_line        : 1
+  too_long          : 0
+  bad_timestamp     : 1
+  bad_level         : 1
+  missing_message   : 1
+Records by level:
+  DEBUG             : 2
+  INFO              : 6
+  WARNING           : 2
+  ERROR             : 4
+  CRITICAL          : 2
+Filter levels       : ERROR,CRITICAL
+Filter keyword      : (none)
+Selected events     : 6
+Filtered out        : 10
+Selected time range : 2026-11-15 10:02:00 .. 2026-11-15 10:09:00
+Consistency check   : OK (every input line accounted for)
+=============================================

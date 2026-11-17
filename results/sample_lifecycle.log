@@ -1,0 +1,12 @@
+[22:58:37.019] [supervisor pid=2740   ppid=2667  ] supervisor started: input=data/sample.log, max restarts=3, checkpoint every 10000 records
+[22:58:37.019] [supervisor pid=2740   ppid=2667  ] attempt 0: starting pipeline at seq 1
+[22:58:37.019] [supervisor pid=2740   ppid=2667  ] created reader     -> pid 2741
+[22:58:37.019] [supervisor pid=2740   ppid=2667  ] created filter     -> pid 2742
+[22:58:37.019] [supervisor pid=2740   ppid=2667  ] created summarizer -> pid 2743
+[22:58:37.021] [reader     pid=2741   ppid=2740  ] done: 20 lines in file, sent 20 records (starting at seq 1)
+[22:58:37.021] [filter     pid=2742   ppid=2740  ] done: kept 6, dropped 10, malformed passed on 4
+[22:58:37.021] [summarizer pid=2743   ppid=2740  ] done: report written (20 lines, 0 duplicates ignored)
+[22:58:37.021] [supervisor pid=2740   ppid=2667  ] reader     (pid 2741) exited normally, status 0
+[22:58:37.021] [supervisor pid=2740   ppid=2667  ] filter     (pid 2742) exited normally, status 0
+[22:58:37.021] [supervisor pid=2740   ppid=2667  ] summarizer (pid 2743) exited normally, status 0
+[22:58:37.021] [supervisor pid=2740   ppid=2667  ] pipeline finished successfully in 2 ms (0 restarts)
